@@ -115,3 +115,5 @@ ops/docker/schemaspy/data
 ops/docker/schemaspy/output
 
 .idea
+
+.vercel
