@@ -1,0 +1,32 @@
+site:
+  title: てすとページ
+  url: http://localhost/
+  start_page: home::index.adoc
+content:
+  sources:
+    - url: .
+      start_paths: ['docs/antora/*', '!docs/_playbook']
+
+asciidoc:
+  attributes:
+    experimental: true
+    page-pagination: true
+    kroki-fetch-diagram: true
+  extensions:
+    - asciidoctor-kroki
+    - '@asciidoctor/tabs'
+
+antora:
+  extensions:
+    - id: lunr
+      require: '@antora/lunr-extension'
+      enabled: true
+      index_latest_only: true
+    - id: atlas
+      require: '@antora/atlas-extension'
+
+ui:
+  bundle:
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/master/raw/build/ui-bundle.zip?job=bundle-stable
+output:
+  dir: ./public/site
