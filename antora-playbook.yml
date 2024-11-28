@@ -1,11 +1,11 @@
 site:
-  title: てすとページ
+  title: Project Documentation
   url: http://localhost/
   start_page: home::index.adoc
 content:
   sources:
     - url: .
-      start_paths: ['docs/antora/*', '!docs/_playbook']
+      start_paths: ['docs/site/*', '!docs/_playbook']
 
 asciidoc:
   attributes:
@@ -20,6 +20,7 @@ antora:
   extensions:
     - id: lunr
       require: '@antora/lunr-extension'
+      languages: [ja]
       enabled: true
       index_latest_only: true
     - id: atlas

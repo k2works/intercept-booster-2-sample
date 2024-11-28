@@ -8,7 +8,8 @@
     "test": "npm-run-all build slides",
     "build": "npx gulp build",
     "slides": "npx gulp slides",
-    "docs": "npx gulp docs"
+    "docs": "npx gulp docs",
+    "site": "npx antora antora-playbook.yml"
   },
   "author": "",
   "license": "ISC",
