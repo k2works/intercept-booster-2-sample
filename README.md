@@ -1,6 +1,7 @@
 # intercept-booster-2
 
 [![Node.js CI](https://github.com/k2works/intercept-booster-2-sample/actions/workflows/node.js.yml/badge.svg)](https://github.com/k2works/intercept-booster-2-sample/actions/workflows/node.js.yml)
+[![Deploy Documentation to GitHub Pages](https://github.com/k2works/intercept-booster-2-sample/actions/workflows/deploy-docs.yml/badge.svg)](https://github.com/k2works/intercept-booster-2-sample/actions/workflows/deploy-docs.yml)
 
 ## 概要
 

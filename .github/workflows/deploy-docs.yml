@@ -1,0 +1,70 @@
+name: Deploy Documentation to GitHub Pages
+
+on:
+  push:
+    branches: [ "main", "develop" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Checkout wiki repository
+        run: |
+          mkdir -p docs/wiki
+          git clone https://github.com/k2works/intercept-booster-2-sample.wiki.git docs/wiki
+
+      - name: Set up Docker
+        run: |
+          docker --version
+
+      - name: Start services
+        run: |
+          echo "Ensuring services are running..."
+          docker compose up -d plantuml mkdocs
+
+      - name: Build MkDocs site
+        run: |
+          echo "Building MkDocs site..."
+          docker compose exec -T mkdocs mkdocs build
+
+      - name: Create temporary directory for build
+        run: |
+          TEMP_DIR=$(mktemp -d)
+          echo "TEMP_DIR=$TEMP_DIR" >> $GITHUB_ENV
+
+      - name: Copy site files from container
+        run: |
+          echo "Copying site files from container..."
+          docker compose cp mkdocs:/docs/site/. ${{ env.TEMP_DIR }}/
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ env.TEMP_DIR }}
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
